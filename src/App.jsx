@@ -1,54 +1,65 @@
 import { useState } from 'react';
 
 export default function App() {
-  console.log('Function App Run');
-  return (
-    <div>
-      <Header />
-      <Counter />
-      <Footer />
-    </div>
-  );
-}
+  const [emailInput, setEmailInput] = useState('a@email.com');
+  const [continentId, setContinentId] = useState('3');
+  const [profile, setProfile] = useState(null);
 
-function Counter() {
-  console.log('Function Counter Run');
-  // let current = 5;
-  // const arr = ['Kaimook', 19];
-  // const [name, age] = arr;
-  const [current, setCurrent] = useState(4);
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    // validate data in a form
+    // test if value is valid email address
+
+    // sent data in a form to a server
+  };
+
   return (
-    <div className="flex gap-8 items-center">
-      <button className="bg-blue-300 px-4 py-2">-</button>
-      <span>{current}</span>
-      <button
-        className="bg-blue-300 px-4 py-2"
-        onClick={() => {
-          setCurrent(current + 1);
+    <form className="flex flex-col gap-6 p-4" onSubmit={handleSubmit}>
+      {/* Controlled component: form input controlled by react state */}
+      <input
+        type="text"
+        placeholder="Enter your email"
+        className="border px-3 py-1.5"
+        onChange={(event) => {
+          console.log(event.target.value);
+          setEmailInput(event.target.value);
         }}
+        value={emailInput}
+      />
+      {/* Controlled component: form input controlled by react state */}
+      <select
+        name=""
+        id=""
+        className="border px-3 py-1.5"
+        onChange={(event) => {
+          console.log(event.target.value);
+          setContinentId(event.target.value);
+        }}
+        value={continentId}
       >
-        +
-      </button>
-    </div>
-  );
-}
-function Footer() {
-  console.log('Function Footer Run');
-  return <footer>Footer</footer>;
-}
-function Header() {
-  console.log('Function Header Run');
-  return (
-    <header>
-      Header
-      <Menu />
-    </header>
-  );
-}
-function Menu() {
-  console.log('Function Menu Run');
-  return <nav>Menu</nav>;
-}
+        <option value="1">Asia</option>
+        <option value="2">Europe</option>
+        <option value="3">Africa</option>
+      </select>
+      {/* Uncontrolled component */}
+      <input
+        type="file"
+        className="border px-3 py-1.5 bg-gray-300"
+        onChange={(event) => {
+          console.log(event.target.value);
+          console.log(event.target.files);
+          if (event.target.files[0]) {
+            console.log('TRUE');
+            setProfile(event.target.files[0]);
+          }
+        }}
 
-const arr = ['Kaimook', 19];
-const [name, age] = arr;
+        // multiple
+      />
+      <button type="button" onClick={() => setProfile(null)}>
+        Cancel Image
+      </button>
+      <button className="bg-green-400 py-2">Submit</button>
+    </form>
+  );
+}
